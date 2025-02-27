@@ -13,7 +13,10 @@
     "phim-moi_clone": "file:",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-fontawesome": "^1.7.1"
+    "react-fontawesome": "^1.7.1",
+    "react-modal": "^3.16.3",
+    "react-multi-carousel": "^2.8.5",
+    "react-youtube": "^10.1.0"
   },
   "devDependencies": {
     "@emotion/react": "^11.14.0",
