@@ -3,10 +3,10 @@
 const Header = () => {
  
   return (
-    <div className="p-4 bg-black flex justify-between items-center *:font-serif">
+    <div className="p-4 bg-black flex justify-between items-center *:font-serif w-[80%] m-auto">
       <div className="flex items-center space-x-4">
-        <h1 className="text-4xl font-semibold text-red-700 ">Phim Moi</h1>
-        <nav className="flex items-center space-x-4 *:text-white hover:*:text-red-500">
+        <h1 className="text-4xl mr-3 font-semibold text-red-700 ">Phim Moi</h1>
+        <nav className="flex items-center space-x-8 *:text-white hover:*:text-red-500">
           <a href="#" className="">
             Phim Mới
           </a>
@@ -26,7 +26,7 @@ const Header = () => {
 
         </nav>
       </div>
-      <div>
+      <div className=" space-x-2">
         <input
           type="text"
           placeholder="Search"
