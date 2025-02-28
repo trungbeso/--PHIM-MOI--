@@ -1,36 +1,39 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const Header = ({ onSearch }) => {
-
+  const [typeIsOpen, setTypeIsOpen] = useState(false);
+  const [nationIsOpen, setNationIsOpen] = useState(false);
   const [textSearch, setTextSearch] = useState("");
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       onSearch(textSearch);
-
     }
   };
 
   return (
-    <div className="p-4 bg-black flex justify-between items-center *:font-serif w-[80%] m-auto">
-      <div className="flex items-center space-x-4">
-        <h1 className="text-4xl mr-3 font-semibold text-red-700 ">Phim Moi</h1>
-        <nav className="flex items-center space-x-8 *:text-white hover:*:text-red-500">
-          <a href="#" className="">
+    <div className="p-4 bg-black cursor-pointer flex justify-between items-center *:font-serif w-[80%] m-auto">
+      <div className="flex items-center space-x-2">
+        <a className="text-3xl mr-3 font-semibold text-red-700 ">Phim Moi</a>
+        <nav className="flex items-center space-x-3 *:text-white hover:*:text-red-500 *:cursor-pointer">
+          <a href="/" >
             Phim Mới
           </a>
           <a href="#" className="">
             Phim Lẻ
           </a>
-          <a href="#" className="">
+          <a href="#" className="" >
             Phim Bộ
           </a>
-          <a href="#" className="">
+          <a href="#" className="" >
             Thể Loại
+            <ExpandMoreIcon />
           </a>
           <a href="#" className="">
             Quốc gia
+            <ExpandMoreIcon />
           </a>
         </nav>
       </div>
