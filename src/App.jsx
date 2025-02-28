@@ -5,6 +5,7 @@ import MovieList from './components/MovieList'
 import MovieSearch from './components/MovieSearch';
 import { data } from 'autoprefixer';
 import { MovieProvider } from './context/MovieDetailContext';
+import RightSideBar from './components/RightSideBar';
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -55,6 +56,8 @@ function App() {
       const data1 = await res1.json();
       const data2 = await res2.json();
       setMovies(data1.results);
+      console.log(data2.results);
+
       setMovieRate(data2.results);
     };
     fetchMovie();
@@ -68,17 +71,29 @@ function App() {
 
   return (
     <MovieProvider>
-      <div className='bg-black pb-32'>
-        <Header onSearch={handleSearch} />
-        <Banner />
-        {movieSearch.length > 0 ? <MovieSearch data={movieSearch} /> : (
-          <>
-            <MovieList title={'Phim Hot'} data={movies} />
-            <MovieList title={'Phim Moi'} data={movieRate} />
-          </>
-        )}
-
+      <div className="bg-black">
+        <div className=' pb-32'>
+          <Header onSearch={handleSearch} />
+          <Banner data={movieRate} />
+        </div>
+        <div className="w-[80%] m-auto flex justify-between">
+          <div className="w-[70%] ">
+            {movieSearch.length > 0 ? <MovieSearch data={movieSearch} /> : (
+              <>
+                <MovieList title={'Phim Chiếu Rạp Mới Cập Nhật'} data={movies} />
+                <MovieList title={'Phim Mới Nổi Bật'} data={movieRate} />
+              </>
+            )}
+          </div>
+          <div className="w-[80%] bottom-0 right-4">
+            <RightSideBar data={movies} />
+          </div>
+        </div>
       </div>
+
+
+
+
     </MovieProvider>
 
   )

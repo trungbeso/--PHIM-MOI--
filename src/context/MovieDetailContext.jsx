@@ -26,13 +26,11 @@ const MovieProvider = ({ children }) => {
         Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
       },
     };
-
     try {
       const response = await fetch(
         `https://api.themoviedb.org/3/movie/${movieId}/videos?language=en-US`,
         options
       );
-
       const data = await response.json();
       setTrailerUrl(data.results[0]?.key);
       console.log(data.results[0]);

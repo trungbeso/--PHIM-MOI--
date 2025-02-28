@@ -1,55 +1,124 @@
-import Star from "../assets/rating.png";
-import HalfStar from "../assets/rating-half.png";
-import ImgTemp from "../assets/temp-1.jpeg";
 import IconPlay from "../assets/play-button.png";
+import { useContext } from "react";
+import { MovieContext } from '../context/MovieDetailContext';
+import PropTypes from 'prop-types';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import StarIcon from '@mui/icons-material/Star';
 
-const Banner = () => {
+
+const Banner = ({ title, data }) => {
+  const { handleVideoTrailer } = useContext(MovieContext);
+  const imgUrl = import.meta.env.VITE_IMG_URL;
+
+  const responsive = {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 1200 },
+      items: 1
+    },
+    desktop: {
+      breakpoint: { max: 1200, min: 992 },
+      items: 1
+    },
+    tablet: {
+      breakpoint: { max: 992, min: 768 },
+      items: 1
+    },
+    mobile: {
+      breakpoint: { max: 768, min: 0 },
+      items: 1
+    }
+  };
+
   return (
-    <div className=" h-[700px] bg-banner bg-center bg-no-repeat bg-cover relative">
-      <div className="absolute w-full top-0 left-0 h-full bg-black opacity-30" />
-      <div className="w-[80%] m-auto h-full flex items-center justify-center space-x-[30px] p-4 relative z-20">
-        <div className="flex flex-col space-y-5 items-baseline w-[50%]">
-          <div className="bg-blue-500 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 text-white py-1 px-3">
-            TV Show
-          </div>
-          <div className="flex flex-col space-y-5 items-space-y-4">
-            <h1 className="text-3xl font-semibold text-white">Nghe nói em thích tôi</h1>
-            <div className="flex items-center space-x-3 *:w-8 *:h-8">
-              <img src={Star} alt="rating" />
-              <img src={Star} alt="rating" />
-              <img src={Star} alt="rating" />
-              <img src={Star} alt="rating" />
-              <img src={HalfStar} alt="rating" />
+    <div className="h-[700px] relative">
+      <Carousel
+        responsive={responsive}
+        ssr={true}
+        infinite={true}
+        autoPlay={true}
+        autoPlaySpeed={4000}
+        keyBoardControl={true}
+        transitionDuration={800}
+        containerClass="carousel-container h-full"
+        removeArrowOnDeviceType={["tablet", "mobile"]}
+        dotListClass="custom-dot-list-style"
+        showDots={true}
+        arrows={false}
+      >
+        {Array.isArray(data) && data.map((item) => (
+          <div
+            key={item.id}
+            style={{ backgroundImage: `url(${imgUrl}${item.backdrop_path})` }}
+            className="h-[700px] w-full bg-center bg-cover relative">
+            <div className="absolute w-full top-0 left-0 h-full bg-black/50" />
+            <div className="md:w-[80%] sm:w-full h-full mx-auto flex items-center justify-between space-x-8 p-4 relative">
+              {/* content- left */}
+              <div className="flex flex-col space-y-5 items-baseline w-1/2 bg-black/50 p-4">
+                <div className="bg-blue-500 transition duration-300 hover:bg-indigo-500 text-white py-1 px-3">
+                  {item.adult ? '18+' : 'PG-13'}
+                </div>
+                <div className="flex flex-col space-y-4">
+                  <h1 className="text-3xl font-semibold text-white">
+                    {item.title || item.original_title}
+                  </h1>
+                  <p className="text-white line-clamp-4">{item.overview}</p>
+                  <div className="flex text-white space-x-4">
+                    <div className="flex items-center space-x-1">
+                      <RemoveRedEyeIcon color="secondary" />
+                      <p>{item.popularity}</p>
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <StarIcon color="primary" />
+                      <p>{item.vote_average}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3 text-white font-semibold">
+                    <p>Ngày công chiếu: </p>
+                    <span>{item.release_date}</span>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <button
+                      className="px-6 py-3 bg-black text-white text-sm font-semibold hover:bg-opacity-80 transition"
+                      onClick={() => handleVideoTrailer(item.id)}
+                    >
+                      Xem Trailer
+                    </button>
+                    <button className="px-6 py-3 rounded-md bg-red-500 text-white text-sm font-semibold hover:bg-red-600 transition">
+                      Xem Phim
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Content Right */}
+              <div className="w-1/2 flex justify-center items-center">
+                <div
+                  className="group cursor-pointer w-[400px] h-[560px] relative "
+                  onClick={() => handleVideoTrailer(item.id)}
+                >
+                  <img
+                    src={`${imgUrl}${item.poster_path}`}
+                    alt={item.title}
+                    className="w-full h-full object-cover rounded-lg shadow-lg shadow-red-400"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <img src={IconPlay} alt="Play" className="w-16 h-16 animate-pulse" />
+                  </div>
+                </div>
+              </div>
             </div>
-            <p className="text-white">
-              lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-              quaestione voluptate. Necessitatibus, quidem. lorem ipsum dolor
-              sit amet consectetur adipisicing elit. Quisquam, quaestione
-              voluptate. Necessitatibus, quidem. lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Quisquam, quaestione voluptate.
-              Necessitatibus, quidem. lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Quisquam, quaestione voluptate. Necessitatibus,
-              quidem. lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Quisquam, quaestione voluptate. Necessitatibus, quidem.
-            </p>
-            <div className="flex items-center space-x-4 *:p-3 text-white text-sm font-semibold ">
-              <button className="  bg-black">Chi tiết</button>
-              <button className=" bg-red-500">Xem phim</button>
-            </div>
           </div>
-        </div>
-        <div className="w-1/2 flex justify-center items-center">
-          <div className="group cursor-pointer w-[400px] h-[560px] relative ">
-            <img src={ImgTemp} alt="temp" className="w-full h-full object-cover" />
-            <div className="w-full h-full absolute top-0 left-0 flex justify-center items-center backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-150 ease-in-out hover:scale-110 ">
-                <img src={IconPlay} alt="" className="w-16 h-16 z-10" />
-            </div>
-            
-          </div>
-        </div>
-      </div>
+        ))}
+      </Carousel>
     </div>
   );
+};
+
+Banner.propTypes = {
+  title: PropTypes.string,
+  data: PropTypes.array,
 };
 
 export default Banner;
