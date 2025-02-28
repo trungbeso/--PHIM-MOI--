@@ -1,7 +1,17 @@
+import PropTypes from "prop-types";
+import { useState } from "react";
 
+const Header = ({ onSearch }) => {
 
-const Header = () => {
- 
+  const [textSearch, setTextSearch] = useState("");
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      onSearch(textSearch);
+
+    }
+  };
+
   return (
     <div className="p-4 bg-black flex justify-between items-center *:font-serif w-[80%] m-auto">
       <div className="flex items-center space-x-4">
@@ -18,12 +28,10 @@ const Header = () => {
           </a>
           <a href="#" className="">
             Thể Loại
-        
           </a>
           <a href="#" className="">
             Quốc gia
           </a>
-
         </nav>
       </div>
       <div className=" space-x-2">
@@ -31,13 +39,22 @@ const Header = () => {
           type="text"
           placeholder="Search"
           className="px-3 py-1 border border-gray-300 rounded-md mr-2"
+          onChange={(e) => setTextSearch(e.target.value)}
+          onKeyDown={handleKeyDown}
+          value={textSearch}
         />
-        <button className="px-3 py-1 bg-red-500 text-white font-semibold rounded-md">
+        <button
+          onClick={() => onSearch(textSearch)}
+          className="px-3 py-1 bg-red-500 text-white font-semibold rounded-md">
           Search
         </button>
       </div>
     </div>
   );
+};
+
+Header.prototypes = {
+  onSearch: PropTypes.func,
 };
 
 export default Header;
