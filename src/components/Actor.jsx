@@ -4,6 +4,8 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { MovieContext } from '../context/MovieDetailContext';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import EmmaStone from '/emma-stone.jpg';
+
 
 const responsive = {
   superLargeDesktop: {
@@ -24,7 +26,7 @@ const responsive = {
   }
 };
 
-const MovieList = ({ title, data }) => {
+const Actor = ({ title, data }) => {
   const imgUrl = import.meta.env.VITE_IMG_URL;
   const { handleVideoTrailer } = useContext(MovieContext);
 
@@ -51,9 +53,9 @@ const MovieList = ({ title, data }) => {
             onClick={() => handleVideoTrailer(item.id)}>
             <div className="group-hover:scale-105 transition-transform duration-500 ease-in-out w-full h-full cursor-pointer">
               <div className="absolute top-0 left-0 w-full h-full bg-black/30 hover:bg-black/0" />
-              <img src={`${imgUrl}${item.poster_path}`} alt={item.original_title} className="w-full h-full object-cover" />
+              <img src={`${imgUrl}${item.profile_path}` || `${EmmaStone}`} alt={item.original_name} className="w-full h-full object-cover" />
               <div className="absolute bottom-4 left-1 text-center flex justify-center items-center w-full">
-                <p className="uppercase text-md">{item.title || item.original_title || item.name || item.original_name}</p>
+                <p className="uppercase text-md">{item.name || item.original_name}</p>
               </div>
             </div>
           </div>
@@ -63,9 +65,9 @@ const MovieList = ({ title, data }) => {
   );
 };
 
-MovieList.propTypes = {
+Actor.propTypes = {
   title: PropTypes.string,
   data: PropTypes.array,
 };
 
-export default MovieList;
+export default Actor;
