@@ -7,7 +7,6 @@ import 'react-multi-carousel/lib/styles.css';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import StarIcon from '@mui/icons-material/Star';
 
-
 const Banner = ({ title, data }) => {
   const { handleVideoTrailer } = useContext(MovieContext);
   const imgUrl = import.meta.env.VITE_IMG_URL;
@@ -53,9 +52,9 @@ const Banner = ({ title, data }) => {
             style={{ backgroundImage: `url(${imgUrl}${item.backdrop_path})` }}
             className="h-[700px] w-full bg-center bg-cover relative">
             <div className="absolute w-full top-0 left-0 h-full bg-black/50" />
-            <div className="md:w-[80%] sm:w-full h-full mx-auto flex items-center justify-between space-x-8 p-4 relative">
+            <div className="md:w-[80%] sm:w-full h-full mx-auto flex flex-col md:flex-row items-center justify-between space-x-8 p-4 relative">
               {/* content- left */}
-              <div className="flex flex-col space-y-5 items-baseline w-1/2 bg-black/50 p-4">
+              <div className="flex flex-col space-y-5 items-baseline w-full md:w-1/2 bg-black/50 p-4">
                 <div className="bg-blue-500 transition duration-300 hover:bg-indigo-500 text-white py-1 px-3">
                   {item.adult ? '18+' : 'PG-13'}
                 </div>
@@ -93,9 +92,9 @@ const Banner = ({ title, data }) => {
               </div>
 
               {/* Content Right */}
-              <div className="w-1/2 flex justify-center items-center">
+              <div className="w-full md:w-1/2 flex justify-center items-center mt-4 md:mt-0">
                 <div
-                  className="group cursor-pointer w-[400px] h-[560px] relative "
+                  className="group cursor-pointer w-[300px] md:w-[400px] h-[450px] md:h-[560px] relative"
                   onClick={() => handleVideoTrailer(item.id)}
                 >
                   <img

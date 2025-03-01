@@ -7,19 +7,18 @@ const MovieSearch = ({ title, data }) => {
   const imgUrl = import.meta.env.VITE_IMG_URL;
   const { handleVideoTrailer } = useContext(MovieContext);
 
-
   return (
-    <div className="w-[80%] m-auto text-white p-10 mb-10">
+    <div className="w-[90%] md:w-[80%] m-auto text-white p-5 md:p-10 mb-10">
       <h2 className="text-xl mb-4 font-bold uppercase">
         {title}
       </h2>
-      <div className='grid md:grid-cols-3 sm:grid-cols-2 lg:grid-cols-4 gap-4'>
+      <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
         {Array.isArray(data) && data.length > 0 && data.map((item) => (
           <div key={item.id}
             onClick={() => handleVideoTrailer(item.id)}
-            className="w-[200px] h-[300px] relative group"
+            className="w-full h-[300px] relative group"
           >
-            <div className=" group-hover:scale-105 transition-transform duration-500 ease-in-out w-full h-full cursor-pointer">
+            <div className="group-hover:scale-105 transition-transform duration-500 ease-in-out w-full h-full cursor-pointer">
               <div className="absolute top-0 left-0 w-full h-full bg-black/30" />
               <img src={`${imgUrl}${item.poster_path}`} alt={item.original_title} className="w-full h-full object-cover" />
               <div className="absolute bottom-4 left-1 text-center flex justify-center items-center w-full">
@@ -32,7 +31,6 @@ const MovieSearch = ({ title, data }) => {
     </div>
   )
 }
-
 
 MovieSearch.propTypes = {
   title: PropTypes.string,
