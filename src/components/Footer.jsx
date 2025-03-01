@@ -8,7 +8,8 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row items-start md:items-start md:p-3 justify-around mb-8">
           {/* Description section */}
           <div className="mb-8 text-sm border-gray-700 w-full md:w-1/4 md:mx-9">
-            <img src="/public/footer-logo.png" alt="" className="my-4" />
+            <img src="https://phimmoi.sale/wp-content/uploads/2023/03/phimmoi.png" alt="" className="my-4" />
+
 
             <p className="mb-4">
               Phim mới - Trang xem phim Online với giao diện mới.<br />
@@ -66,13 +67,15 @@ const Footer = () => {
             {[
               "anime", "animety", "anime hay", "anime ty",
               "download anime vietsub", "anime hd", "tai anime",
-              "anime moi nhat", "phim anime", "hoat hinh nhat", "tokuda", "maria ozawa"
+              "anime moi nhat", "phim anime", "hoat hinh nhat", "tokuda"
             ].map((keyword, index) => (
               <span key={index} className="hover:text-white cursor-pointer">
                 {keyword}
               </span>
             ))}
           </div>
+
+          <div className="text-gray-500">-----------Trung Beso ©-----------</div>
 
           <div className="social flex gap-4 items-center">
             <a href="https://www.facebook.com/">

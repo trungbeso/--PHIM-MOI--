@@ -1,29 +1,6 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-const movieType = [
-  { "id": 1, "type": "Phim Hành Động", "path": "/phim-hanh-dong" },
-  { "id": 2, "type": "Phim Kinh Dị", "path": "/phim-kinh-di" },
-  { "id": 3, "type": "Phim Hài", "path": "/phim-hai" },
-  { "id": 4, "type": "Phim Tình Cảm", "path": "/phim-tinh-cam" },
-  { "id": 5, "type": "Phim Viễn Tưởng", "path": "/phim-vien-tuong" },
-  { "id": 6, "type": "Phim Hoạt Hình", "path": "/phim-hoat-hinh" },
-  { "id": 7, "type": "Phim Phiêu Lưu", "path": "/phim-phieu-luu" },
-  { "id": 8, "type": "Phim Tài Liệu", "path": "/phim-tai-lieu" },
-  { "id": 9, "type": "Phim Chiến Tranh", "path": "/phim-chien-tranh" },
-  { "id": 10, "type": "Phim Thể Thao", "path": "/phim-the-thao" },
-  { "id": 11, "type": "Phim Gia Đình", "path": "/phim-gia-dinh" },
-  { "id": 12, "type": "Phim Âm Nhạc", "path": "/phim-am-nhac" },
-  { "id": 13, "type": "Phim Tâm Lý", "path": "/phim-tam-ly" },
-  { "id": 14, "type": "Phim Cổ Trang", "path": "/phim-co-trang" },
-  { "id": 15, "type": "Phim Học Đường", "path": "/phim-hoc-duong" },
-  { "id": 16, "type": "Phim Khoa Học", "path": "/phim-khoa-hoc" },
-  { "id": 17, "type": "Phim Hình Sự", "path": "/phim-hinh-su" },
-  { "id": 18, "type": "Phim Võ Thuật", "path": "/phim-vo-thuat" },
-  { "id": 19, "type": "Phim Thần Thoại", "path": "/phim-than-thoai" },
-  { "id": 20, "type": "Phim Kinh Điển", "path": "/phim-kinh-dien" }
-];
 
 const movieCountry = [
   { "id": 1, "country": "Việt Nam", "path": "/phim-viet-nam" },
@@ -45,7 +22,9 @@ const movieCountry = [
 ]
 
 const Header = ({ onSearch }) => {
+  const apiKey = import.meta.env.VITE_API_KEY;
   const [typeIsOpen, setTypeIsOpen] = useState(false);
+  const [movieTypes, setMovieTypes] = useState([]);
   const [countryIsOpen, setCountryIsOpen] = useState(false);
   const [textSearch, setTextSearch] = useState("");
 
@@ -54,6 +33,30 @@ const Header = ({ onSearch }) => {
       onSearch(textSearch);
     }
   };
+
+  useEffect(() => {
+    const fetchMovieType = async () => {
+      const options = {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${apiKey}`
+        }
+      };
+      const url = 'https://api.themoviedb.org/3/genre/movie/list?language=vi';
+      try {
+        const res = await fetch(url, options);
+        const data = await res.json();
+        setMovieTypes(data.genres);
+      } catch (error) {
+        console.log(error);
+        console.log(data.genres);
+      }
+
+    }
+    fetchMovieType();
+  }, []);
+
 
   return (
     <div className="p-4 bg-black cursor-pointer flex flex-col md:flex-row justify-between items-center md:w-[80%] m-auto">
@@ -80,9 +83,9 @@ const Header = ({ onSearch }) => {
             </a>
             {typeIsOpen && (
               <div className="absolute top-full bg-black text-white p-3 rounded shadow-lg z-30 grid grid-cols-2 md:grid-cols-4 space-x-1 space-y-1 w-[200px] md:w-[370px] text-xs">
-                {movieType.map((movie) => (
-                  <a key={movie.id} href={movie.path} className="block p-1 px-2 hover:bg-gray-700 bg-gray-900 hover:font-semibold">
-                    {movie.type}
+                {Array.isArray(movieTypes) && movieTypes.map((movie) => (
+                  <a key={movie.id} href='#' className="block p-1 px-2 hover:bg-gray-700 bg-gray-900 hover:font-semibold">
+                    {movie.name}
                   </a>
                 ))}
               </div>
