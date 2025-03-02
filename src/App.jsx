@@ -1,12 +1,12 @@
-import { useState, useEffect, useRef } from 'react'
-import Banner from './components/Banner'
-import Header from './components/Header'
-import MovieList from './components/MovieList'
+import { useState, useEffect, useRef } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Banner from './components/Banner';
+import MovieList from './components/MovieList';
 import MovieSearch from './components/MovieSearch';
-import { MovieProvider } from './context/MovieDetailContext';
-import RightSideBar from './components/RightSideBar';
-import Footer from './components/Footer';
 import Actor from './components/Actor';
+import CinemaPage from './page/CinemaPage';
+import Layout from './components/Layout/Layout';
+import HomePage from './page/HomePage';
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -35,10 +35,10 @@ function App() {
       setMovieSearch(data.results);
       console.log(data.results);
     } catch (error) {
-      console.log(data.results);
       console.log(error);
     }
   }
+
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -85,32 +85,26 @@ function App() {
   }, [movieSearch])
 
   return (
-    <MovieProvider>
-      <div className="bg-black">
-        <div className='pb-32'>
-          <Header onSearch={handleSearch} />
-          <Banner data={movieRate} />
-        </div>
-        <div className="w-[90%] md:w-[80%] m-auto flex flex-col md:flex-row justify-between">
-          <div className="w-full md:w-[70%]">
-            {movieSearch.length > 0 ? <MovieSearch data={movieSearch} /> : (
-              <>
-                <MovieList title={'Phim Chiếu Rạp Mới Cập Nhật'} data={movies} />
-                <MovieList title={'Phim Mới Nổi Bật'} data={movieRate} />
-                <MovieList title={'Phim Bộ Mới Cập Nhật'} data={tvShows} />
-                <MovieList title={'Phim Bộ Nổi Bật'} data={tvShowRate} />
-                <Actor title={'Diễn Viên Nổi Bật'} data={actors} />
-              </>
-            )}
-          </div>
-          <div className="w-full md:w-[30%] mt-10 md:mt-0">
-            <RightSideBar data={movies} />
-          </div>
-        </div>
-        <Footer />
-      </div>
-    </MovieProvider>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<Layout movieSearch={movieSearch} />}>
+          <Route index element={<HomePage
+            movieSearch={movieSearch}
+            movies={movies}
+            movieRate={movieRate}
+            tvShows={tvShows}
+            tvShowRate={tvShowRate}
+            actors={actors} />} />
+          <Route path="search" element={<MovieSearch title={'Kết Quả Tìm Kiếm'} />} />
+          <Route path="movies" element={<CinemaPage title={'Phim Chiếu Rạp Mới Cập Nhật'} data={movies} />} />
+          <Route path="rated-movies" element={<CinemaPage title={'Phim Mới Nổi Bật'} data={movieRate} />} />
+          <Route path="tv-shows" element={<CinemaPage title={'Phim Bộ Mới Cập Nhật'} data={tvShows} />} />
+          <Route path="rated-tv-shows" element={<CinemaPage title={'Phim Bộ Nổi Bật'} data={tvShowRate} />} />
+          <Route path="actors" element={<Actor title={'Diễn Viên Nổi Bật'} data={actors} />} />
+        </Route>
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;

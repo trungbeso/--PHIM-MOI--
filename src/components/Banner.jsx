@@ -7,7 +7,7 @@ import 'react-multi-carousel/lib/styles.css';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import StarIcon from '@mui/icons-material/Star';
 
-const Banner = ({ title, data }) => {
+const Banner = ({ data }) => {
   const { handleVideoTrailer } = useContext(MovieContext);
   const imgUrl = import.meta.env.VITE_IMG_URL;
 
@@ -60,7 +60,7 @@ const Banner = ({ title, data }) => {
                 </div>
                 <div className="flex flex-col space-y-4">
                   <h1 className="text-3xl font-semibold text-white">
-                    {item.title || item.original_title}
+                    {item.title || item.original_title || item.name || item.original_name}
                   </h1>
                   <p className="text-white line-clamp-4">{item.overview}</p>
                   <div className="flex text-white space-x-4">
@@ -75,7 +75,7 @@ const Banner = ({ title, data }) => {
                   </div>
                   <div className="flex items-center space-x-3 text-white font-semibold">
                     <p>Ngày công chiếu: </p>
-                    <span>{item.release_date}</span>
+                    <span>{item.release_date || item.first_air_date}</span>
                   </div>
                   <div className="flex items-center space-x-4">
                     <button
