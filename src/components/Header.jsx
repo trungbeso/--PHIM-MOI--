@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Form, Link } from "react-router";
 
 const movieCountry = [
   { "id": 1, "country": "Việt Nam", "path": "/phim-viet-nam" },
@@ -113,20 +114,24 @@ const Header = ({ onSearch }) => {
         </nav>
       </div>
       <div className="flex space-x-2 w-full md:w-auto">
-        <input
-          type="text"
-          placeholder="Search"
-          className="flex-grow md:flex-grow-0 border border-gray-300 rounded-md mr-2 p-1"
-          onChange={(e) => setTextSearch(e.target.value)}
-          onKeyDown={handleKeyDown}
-          value={textSearch}
-        />
-        <button
-          onClick={() => onSearch(textSearch)}
-          className="px-3 py-1 bg-red-500 text-white font-semibold rounded-md"
-        >
-          Search
-        </button>
+        <div>
+          <input
+            type="text"
+            placeholder="Search"
+            className="flex-grow md:flex-grow-0 border border-gray-300 rounded-md mr-2 p-1"
+            onChange={(e) => setTextSearch(e.target.value)}
+            onKeyDown={handleKeyDown}
+            value={textSearch}
+          />
+          <Link
+            to="/search"
+            onClick={() => onSearch(textSearch)}
+            className="px-3 py-1 bg-red-500 text-white font-semibold rounded-md"
+          >
+            Search
+          </Link>
+        </div>
+
       </div>
     </div>
   );
